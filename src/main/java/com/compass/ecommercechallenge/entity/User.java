@@ -11,6 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @ToString
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -20,17 +21,12 @@ public class User {
     private String email;
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "tb_user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private Set<Role> role;
 
     public enum Values {
-        ADMIN(1),
-        CLIENT(2);
+        ADMIN(0),
+        CLIENT(1);
 
         long roleId;
 
