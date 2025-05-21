@@ -1,4 +1,4 @@
-package com.compass.ecommerce_challenge;
+package com.compass.ecommercechallenge;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,0 +1,5 @@
+INSERT INTO role (id, name) VALUES (0, 'ADMIN')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO role (id, name) VALUES (1, 'CLIENT')
+ON CONFLICT (id) DO NOTHING;
