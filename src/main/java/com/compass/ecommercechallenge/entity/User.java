@@ -1,7 +1,9 @@
 package com.compass.ecommercechallenge.entity;
 
+import com.compass.ecommercechallenge.controller.dto.LoginRequest;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
 import java.util.UUID;
@@ -33,5 +35,9 @@ public class User {
         Values(long roleId) {
             this.roleId = roleId;
         }
+    }
+
+    public boolean isLoginCorret(LoginRequest loginRequest, PasswordEncoder passwordEncoder){
+        return passwordEncoder.matches(loginRequest.password(), this.password);
     }
 }
