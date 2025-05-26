@@ -26,17 +26,6 @@ public class User {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private Set<Role> role;
 
-    public enum Values {
-        ADMIN(0),
-        CLIENT(1);
-
-        long roleId;
-
-        Values(long roleId) {
-            this.roleId = roleId;
-        }
-    }
-
     public boolean isLoginCorret(LoginRequest loginRequest, PasswordEncoder passwordEncoder){
         return passwordEncoder.matches(loginRequest.password(), this.password);
     }

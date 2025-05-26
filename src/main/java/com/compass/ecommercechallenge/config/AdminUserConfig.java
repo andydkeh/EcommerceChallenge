@@ -1,5 +1,6 @@
 package com.compass.ecommercechallenge.config;
 
+import com.compass.ecommercechallenge.UserRoleEnum;
 import com.compass.ecommercechallenge.entity.User;
 import com.compass.ecommercechallenge.repository.RoleRepository;
 import com.compass.ecommercechallenge.repository.UserRepository;
@@ -30,7 +31,7 @@ public class AdminUserConfig implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
 
-        var roleAdmin = roleRepository.findByName(User.Values.ADMIN.name());
+        var roleAdmin = roleRepository.findByName(UserRoleEnum.ADMIN.name());
 
         var userAdmin = userRepository.findByEmail("admin@admin.com");
 
