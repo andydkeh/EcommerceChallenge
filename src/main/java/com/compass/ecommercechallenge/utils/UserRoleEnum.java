@@ -1,4 +1,4 @@
-package com.compass.ecommercechallenge;
+package com.compass.ecommercechallenge.utils;
 
 public enum UserRoleEnum {
     ADMIN(0),
