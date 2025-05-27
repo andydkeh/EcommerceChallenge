@@ -1,10 +1,9 @@
 package com.compass.ecommercechallenge.controller;
 
-import com.compass.ecommercechallenge.controller.dto.LoginRequest;
-import com.compass.ecommercechallenge.controller.dto.LoginResponse;
+import com.compass.ecommercechallenge.dto.LoginRequest;
+import com.compass.ecommercechallenge.dto.LoginResponse;
 import com.compass.ecommercechallenge.entity.Role;
 import com.compass.ecommercechallenge.repository.UserRepository;
-import com.nimbusds.jwt.JWTClaimsSet;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,7 +38,7 @@ public class TokenController {
         }
 
         var now = Instant.now();
-        var expiresIn = 300L;
+        var expiresIn = 30000L;
 
         var scopes = user.get().getRole()
                 .stream()

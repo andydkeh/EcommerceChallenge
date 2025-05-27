@@ -1,6 +1,6 @@
 package com.compass.ecommercechallenge.entity;
 
-import com.compass.ecommercechallenge.controller.dto.LoginRequest;
+import com.compass.ecommercechallenge.dto.LoginRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;

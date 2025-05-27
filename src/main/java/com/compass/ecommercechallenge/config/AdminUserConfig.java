@@ -1,6 +1,6 @@
 package com.compass.ecommercechallenge.config;
 
-import com.compass.ecommercechallenge.UserRoleEnum;
+import com.compass.ecommercechallenge.utils.UserRoleEnum;
 import com.compass.ecommercechallenge.entity.User;
 import com.compass.ecommercechallenge.repository.RoleRepository;
 import com.compass.ecommercechallenge.repository.UserRepository;
@@ -8,7 +8,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import com.compass.ecommercechallenge.entity.Role;
 
 import java.util.Set;
 

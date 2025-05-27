@@ -1,15 +1,12 @@
 package com.compass.ecommercechallenge.controller;
 
-import com.compass.ecommercechallenge.UserRoleEnum;
-import com.compass.ecommercechallenge.controller.dto.CreteUserDTO;
+import com.compass.ecommercechallenge.utils.UserRoleEnum;
+import com.compass.ecommercechallenge.dto.CreteUserDTO;
 import com.compass.ecommercechallenge.entity.User;
 import com.compass.ecommercechallenge.repository.RoleRepository;
 import com.compass.ecommercechallenge.repository.UserRepository;
-import com.compass.ecommercechallenge.service.UserService;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Set;
 
 @RestController
+@RequestMapping("/api/v1")
 public class UserController {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;

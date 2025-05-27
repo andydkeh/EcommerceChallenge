@@ -1,4 +1,4 @@
-package com.compass.ecommercechallenge.controller.dto;
+package com.compass.ecommercechallenge.dto;
 
 public record LoginResponse(String accessToken, long expiresIn) {
 }
