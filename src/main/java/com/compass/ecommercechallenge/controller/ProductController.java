@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/api/v1")
 public class ProductController {
     private final ProductService productService;
 
@@ -39,5 +40,21 @@ public class ProductController {
     public ResponseEntity<Optional<ReadProductDTO>> readProductById(@PathVariable UUID id) {
         var product = productService.readProduct(id);
         return ResponseEntity.ok(product);
+    }
+
+    @Transactional
+    @PostMapping("/deleteProduct/{id}")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")
+    public ResponseEntity<Void> deleteProduct(@PathVariable UUID id){
+        productService.deleteProduct(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @Transactional
+    @PostMapping("/updateProduct/{id}")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")
+    public ResponseEntity<Void> updateProduct(@PathVariable UUID id, @RequestBody CreateProductDTO dto){
+        productService.updateProduct(id, dto);
+        return ResponseEntity.ok().build();
     }
 }

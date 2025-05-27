@@ -5,7 +5,9 @@ import com.compass.ecommercechallenge.dto.product.ReadProductDTO;
 import com.compass.ecommercechallenge.entity.Product;
 import com.compass.ecommercechallenge.repository.ProductRepository;
 import com.compass.ecommercechallenge.utils.FormatPrice;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,5 +51,37 @@ public class ProductService {
                         product.getDescription(),
                         FormatPrice.formatPrice(product.getPrice())
                 ));
+    }
+
+    public void deleteProduct(UUID id){
+        var productExists = productRepository.findById(id);
+        if(productExists.isPresent()){
+            productRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    public void updateProduct(UUID id, CreateProductDTO dto){
+        var product = productRepository.findById(id);
+
+        if(product.isPresent()){
+            product.get().setName(dto.name());
+            product.get().setDescription(dto.description());
+            product.get().setPrice(dto.price());
+            product.get().setQuantity(dto.quantity());
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public void inactivateProduct(UUID id, boolean status){
+        var product = productRepository.findById(id);
+        if(product.isPresent()){
+            product.get().setIsActive(status);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 }
