@@ -3,6 +3,7 @@ package com.compass.ecommercechallenge.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
@@ -22,5 +23,5 @@ public class OrderItem {
 
     private Integer quantity;
 
-    private Double price;
+    private BigDecimal price;
 }

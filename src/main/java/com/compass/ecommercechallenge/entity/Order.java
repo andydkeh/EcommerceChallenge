@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class Order {
     @JoinColumn(name = "id_user")
     private User user;
 
-    private Double totalPrice;
+    private BigDecimal totalPrice;
     private Boolean status;
 
     @CreationTimestamp
