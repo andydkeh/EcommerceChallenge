@@ -13,7 +13,13 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private UUID userId;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User idUser;
+
+    @Column(name = "is_active")
+    private Boolean isActive = true;
 
     @CreationTimestamp
     @Column(name = "created_at")
