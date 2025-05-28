@@ -40,7 +40,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                                .requestMatchers(HttpMethod.POST, "api/v1/login").permitAll()
+                                .requestMatchers(HttpMethod.POST, "api/v1/createUser").permitAll()
                                 .anyRequest().authenticated())
                 .oauth2ResourceServer(oAuth2 ->
                         oAuth2.jwt(Customizer.withDefaults()))
