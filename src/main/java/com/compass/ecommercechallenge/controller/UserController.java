@@ -1,5 +1,6 @@
 package com.compass.ecommercechallenge.controller;
 
+import com.compass.ecommercechallenge.service.CartService;
 import com.compass.ecommercechallenge.utils.UserRoleEnum;
 import com.compass.ecommercechallenge.dto.CreteUserDTO;
 import com.compass.ecommercechallenge.entity.User;
@@ -24,13 +25,17 @@ public class UserController {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final CartService cartService;
 
-    public UserController(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserController(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
+                          CartService cartService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        this.cartService = cartService;
     }
 
+    //client+cart
     @Transactional
     @PostMapping("/createUser")
     public ResponseEntity<Void> newUser(@RequestBody CreteUserDTO newUserDTO) {
@@ -47,6 +52,8 @@ public class UserController {
         user.setRole(Set.of(clientRole));
 
         userRepository.save(user);
+
+        cartService.createCart(user);
 
         return ResponseEntity.ok().build();
     }
