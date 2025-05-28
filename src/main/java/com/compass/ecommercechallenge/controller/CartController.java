@@ -1,5 +1,6 @@
 package com.compass.ecommercechallenge.controller;
 
+import com.compass.ecommercechallenge.dto.cart.CartEditQuantityDTO;
 import com.compass.ecommercechallenge.dto.cart.CartItemDTO;
 import com.compass.ecommercechallenge.dto.cart.ReadCartItemDTO;
 import com.compass.ecommercechallenge.dto.product.ReadProductDTO;
@@ -44,6 +45,12 @@ public class CartController {
     public ResponseEntity<Void> deleteItemCart(@PathVariable UUID id){
         cartService.deleteItemsCart(id);
 
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/cart/editQuantity")
+    public ResponseEntity<Void> editQuantity(@AuthenticationPrincipal Jwt jwt, @RequestBody CartEditQuantityDTO cartEditQuantityDTO){
+        cartService.editQuantityItem(UUID.fromString(jwt.getClaim("sub")), cartEditQuantityDTO);
         return ResponseEntity.ok().build();
     }
 }

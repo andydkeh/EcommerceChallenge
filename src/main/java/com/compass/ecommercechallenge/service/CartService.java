@@ -1,5 +1,6 @@
 package com.compass.ecommercechallenge.service;
 
+import com.compass.ecommercechallenge.dto.cart.CartEditQuantityDTO;
 import com.compass.ecommercechallenge.dto.cart.CartItemDTO;
 import com.compass.ecommercechallenge.dto.cart.ReadCartItemDTO;
 import com.compass.ecommercechallenge.dto.product.ReadProductDTO;
@@ -92,7 +93,7 @@ public class CartService {
     //valida se carrinho ta aberto > valida se iteme xiste
     public void deleteItemsCart(UUID idItem){
         var idItemExists = cartItemRepository.findById(idItem);
-        if (!idItemExists.isPresent()){
+        if (idItemExists.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
@@ -103,5 +104,26 @@ public class CartService {
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
+    }
+
+    //valida se iteme xiste, se carrinho ta ativo e se o carrinho pertence ao user
+    public void editQuantityItem(UUID idUser, CartEditQuantityDTO cartEditQuantityDTO){
+        var idItemExists = cartItemRepository.findById(cartEditQuantityDTO.idItem());
+
+        if (idItemExists.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        var cartExists = cartRepository.findCartsByIdAndIsActive(idItemExists.get().getCartId().getId(), true);
+
+        var itemUser = cartRepository.findCartsByIdUserAndIsActive(userRepository.findUserById(idUser), true);
+
+        if (cartExists != null && itemUser != null){
+            var cartItem = cartItemRepository.findById(cartEditQuantityDTO.idItem());
+            cartItem.get().setQuantity(cartEditQuantityDTO.quantity());
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
     }
 }
