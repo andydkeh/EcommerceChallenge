@@ -2,6 +2,7 @@ package com.compass.ecommercechallenge.controller;
 
 import com.compass.ecommercechallenge.service.OrderService;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +19,8 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/finishOrder")
-    public RequestEntity<?> finishOrder(@AuthenticationPrincipal Jwt jwt){
-
-    }
+//    @PostMapping("/finishOrder")
+//    public RequestEntity<Void> finishOrder(@AuthenticationPrincipal Jwt jwt){
+//        return ResponseEntity.ok().build();
+//    }
 }

@@ -42,7 +42,7 @@ public class OrderService {
 
         //chamar aqui o createOrdemItem
 
-        orderRepository.save(order);
+        //orderRepository.save(order);
     }
 
     public void createOrderItem(CreateOrderItemDTO createOrderItemDTO){
