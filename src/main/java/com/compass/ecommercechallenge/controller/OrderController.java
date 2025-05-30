@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/v1")
 public class OrderController {
@@ -19,8 +21,9 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-//    @PostMapping("/finishOrder")
-//    public RequestEntity<Void> finishOrder(@AuthenticationPrincipal Jwt jwt){
-//        return ResponseEntity.ok().build();
-//    }
+    @PostMapping("/finishOrder")
+    public ResponseEntity<Void> finishOrder(@AuthenticationPrincipal Jwt jwt){
+        orderService.finishOrder(UUID.fromString(jwt.getClaim("sub")));
+        return ResponseEntity.ok().build();
+    }
 }
