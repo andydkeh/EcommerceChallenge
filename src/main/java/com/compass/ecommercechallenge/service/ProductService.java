@@ -71,6 +71,7 @@ public class ProductService {
             product.get().setDescription(dto.description());
             product.get().setPrice(dto.price());
             product.get().setQuantity(dto.quantity());
+            product.get().setIsActive(true);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

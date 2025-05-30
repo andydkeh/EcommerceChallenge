@@ -1,4 +1,7 @@
 package com.compass.ecommercechallenge.dto;
 
-public record CreteUserDTO(String email, String password) {
+import jakarta.validation.constraints.Email;
+
+public record CreteUserDTO(@Email String email,
+                           String password) {
 }
