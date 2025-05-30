@@ -1,5 +1,3 @@
-package com.compass.ecommercechallenge.controller;
-
 import com.compass.ecommercechallenge.dto.report.LowStockDTO;
 import com.compass.ecommercechallenge.dto.report.TopCustomerDTO;
 import com.compass.ecommercechallenge.dto.report.TopProductSaledDTO;

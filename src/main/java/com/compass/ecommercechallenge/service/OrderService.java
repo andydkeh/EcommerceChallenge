@@ -65,10 +65,6 @@ public class OrderService {
         cartItems.forEach(cartItem -> {
             createOrderItem(order, cartItem);
         });
-
-        order.setTotalPrice(orderItemRepository.sumPriceByOrderItem(order));
-        order.setStatus(true);
-        orderRepository.save(order);
     }
 
     public void createOrderItem(Order order, CartItem cartItem){
