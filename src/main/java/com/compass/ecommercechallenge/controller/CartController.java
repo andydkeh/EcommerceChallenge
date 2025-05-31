@@ -5,6 +5,8 @@ import com.compass.ecommercechallenge.dto.cart.CartItemDTO;
 import com.compass.ecommercechallenge.dto.cart.ReadCartItemDTO;
 import com.compass.ecommercechallenge.dto.product.ReadProductDTO;
 import com.compass.ecommercechallenge.service.CartService;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,8 +34,9 @@ public class CartController {
         }
     }
 
+    @Transactional
     @PostMapping("/addItemsCart")
-    public ResponseEntity<Void> addItemsCart(@AuthenticationPrincipal Jwt jwt, @RequestBody List<CartItemDTO> items){
+    public ResponseEntity<Void> addItemsCart(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody List<CartItemDTO> items){
         var idUserToken = UUID.fromString(jwt.getClaim("sub"));
         cartService.addItemsCart(idUserToken, items);
 
@@ -49,7 +52,7 @@ public class CartController {
     }
 
     @PostMapping("/cart/editQuantity")
-    public ResponseEntity<Void> editQuantity(@AuthenticationPrincipal Jwt jwt, @RequestBody CartEditQuantityDTO cartEditQuantityDTO){
+    public ResponseEntity<Void> editQuantity(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody CartEditQuantityDTO cartEditQuantityDTO){
         cartService.editQuantityItem(UUID.fromString(jwt.getClaim("sub")), cartEditQuantityDTO);
         return ResponseEntity.ok().build();
     }

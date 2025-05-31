@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +25,7 @@ public class ProductController {
     @Transactional
     @PostMapping("/createProduct")
     @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")
-    public ResponseEntity<Void> createProduct(@RequestBody CreateProductDTO dto){
+    public ResponseEntity<Void> createProduct(@Valid @RequestBody CreateProductDTO dto){
         productService.createProduct(dto);
 
         return ResponseEntity.ok().build();

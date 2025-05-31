@@ -1,6 +1,7 @@
 package com.compass.ecommercechallenge.controller;
 
 import com.compass.ecommercechallenge.service.OrderService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +22,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    @Transactional
     @PostMapping("/finishOrder")
     public ResponseEntity<Void> finishOrder(@AuthenticationPrincipal Jwt jwt){
         orderService.finishOrder(UUID.fromString(jwt.getClaim("sub")));

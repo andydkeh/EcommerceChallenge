@@ -19,4 +19,7 @@ public interface CartItemRepository extends JpaRepository<CartItem, UUID> {
    List<CartItem> findByCartId(Cart cart);
    
    CartItem findCartItemByCartIdAndProductId(Cart cartId, Product productId);
+
+   @Query("SELECT SUM(ci.quantity * p.price) FROM CartItem ci JOIN ci.productId p WHERE ci.cartId = :cart")
+   BigDecimal calculateCartTotal(@Param("cart") Cart cart);
 }

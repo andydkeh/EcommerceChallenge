@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -35,6 +36,4 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
     WHERE order.createdAt BETWEEN :startDate AND :endDate
 """)
     Object[] findSalesSummary(OffsetDateTime startDate, OffsetDateTime endDate);
-
-
 }
