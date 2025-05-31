@@ -4,6 +4,9 @@ import com.compass.ecommercechallenge.dto.product.CreateProductDTO;
 import com.compass.ecommercechallenge.dto.product.ReadProductDTO;
 import com.compass.ecommercechallenge.service.ProductService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +27,8 @@ public class ProductController {
     @Transactional
     @PostMapping("/createProduct")
     @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")
-    public ResponseEntity<Void> createProduct(@RequestBody CreateProductDTO dto){
+    public ResponseEntity<Void> createProduct(@Valid @RequestBody CreateProductDTO dto){
         productService.createProduct(dto);
-
         return ResponseEntity.ok().build();
     }
 
