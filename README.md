@@ -2,10 +2,6 @@
 
 Um sistema completo de e-commerce desenvolvido em Spring Boot, oferecendo funcionalidades robustas para gestão de produtos, carrinho de compras, processamento de pedidos e relatórios administrativos.
 
-## Sobre o Projeto
-
-Este projeto foi desenvolvido como parte de um desafio técnico, implementando um sistema de e-commerce moderno com foco em segurança, escalabilidade e experiência do usuário. A aplicação oferece uma API RESTful completa para operações de comércio eletrônico, desde o cadastro de usuários até a finalização de compras e geração de relatórios gerenciais.
-
 ## Tecnologias Utilizadas
 
 - **Java 21** - Linguagem de programação principal
