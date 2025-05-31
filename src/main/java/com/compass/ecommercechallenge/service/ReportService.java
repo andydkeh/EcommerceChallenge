@@ -28,7 +28,6 @@ public class ReportService {
         return orderRepository.findTopCustomers();
     }
 
-    //colocar retorno do List DTO
     public List<TopProductSaledDTO> findTopProducts(){
         return orderItemRepository.findTopProductSaled();
     }
@@ -45,33 +44,13 @@ public class ReportService {
     }
 
     public TotalSalesDTO findTotalSales(OffsetDateTime startDate, OffsetDateTime endDate){
-        Object[] sales = orderRepository.findSalesSummary(startDate, endDate);
+        Long count = orderRepository.countOrdersByPeriod(startDate, endDate);
+        BigDecimal total = orderRepository.sumTotalByPeriod(startDate, endDate);
+
         return new TotalSalesDTO(
-                (Integer) sales[0],
-                (BigDecimal) sales[1],
+                count != null ? count.intValue() : 0,
+                total != null ? total : BigDecimal.ZERO,
                 orderItemRepository.findTopProductSaledByCreatedAtBetween(startDate, endDate)
         );
     }
-
-
-
-//        public Integer reportAllOrders(ReportTotalOrdersDTO reportTotalOrdersDTO) {
-//        if (reportTotalOrdersDTO.dateStart().isAfter(reportTotalOrdersDTO.dateEnd())){
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-//        }
-//
-//        return orderRepository.()
-//                .stream()
-//
-//
-//                .map(product -> new ReadProductDTO(
-//                        product.getId(),
-//                        product.getName(),
-//                        product.getDescription(),
-//                        FormatPrice.formatPrice(product.getPrice())
-//                ))
-//                .collect(Collectors.toList());
-//
-//        return orderRepository.countOrdersByCreatedAtBetween(reportTotalOrdersDTO.dateStart(), reportTotalOrdersDTO.dateEnd());
-//    }
 }

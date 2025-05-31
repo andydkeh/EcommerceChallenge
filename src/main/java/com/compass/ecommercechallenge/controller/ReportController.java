@@ -1,6 +1,9 @@
+package com.compass.ecommercechallenge.controller;
+
 import com.compass.ecommercechallenge.dto.report.LowStockDTO;
 import com.compass.ecommercechallenge.dto.report.TopCustomerDTO;
 import com.compass.ecommercechallenge.dto.report.TopProductSaledDTO;
+import com.compass.ecommercechallenge.dto.report.TotalSalesDTO;
 import com.compass.ecommercechallenge.service.OrderService;
 import com.compass.ecommercechallenge.service.ReportService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,7 +19,6 @@ import java.util.List;
 @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")
 public class ReportController {
 
-
     private final ReportService reportService;
     private final OrderService orderService;
 
@@ -26,11 +28,12 @@ public class ReportController {
     }
 
     @GetMapping("/totalSales")
-    public ResponseEntity<Integer> totalSales(@RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime startDate,
-                                              @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime endDate
+    public ResponseEntity<TotalSalesDTO> totalSales(
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime endDate
     ) {
-        reportService.findTotalSales(startDate, endDate);
-        return ResponseEntity.ok().build();
+        TotalSalesDTO result = reportService.findTotalSales(startDate, endDate);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/top-customers")
