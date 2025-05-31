@@ -43,7 +43,6 @@ public class CartController {
         return ResponseEntity.ok().build();
     }
 
-    //testar depois se ta deletando mesmo com o cart fechado
     @PostMapping("/deleteItemCart/{id}")
     public ResponseEntity<Void> deleteItemCart(@PathVariable UUID id){
         cartService.deleteItemsCart(id);

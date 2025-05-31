@@ -36,12 +36,9 @@ public class PasswordResetController {
                 "Senha alterada com sucesso"));
     }
 
-    // Endpoint opcional para validar token antes do usuário digitar nova senha
     @GetMapping("/validate-token")
     public ResponseEntity<MessageResponseDTO> validateToken(
             @RequestParam String token) {
-
-        // Implementar validação similar ao resetPassword, mas sem alterar senha
 
         return ResponseEntity.ok(new MessageResponseDTO("Token válido"));
     }
