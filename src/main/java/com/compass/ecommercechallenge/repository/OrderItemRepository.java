@@ -16,10 +16,7 @@ import java.util.UUID;
 
 @Repository
 public interface OrderItemRepository extends JpaRepository<OrderItem, UUID> {
-    @Query("SELECT SUM(ord.price) FROM OrderItem ord WHERE ord.orderId = :order")
-    BigDecimal sumPriceByOrderItem(@Param("order") Order order);
-
-    @Query("""
+       @Query("""
             SELECT new com.compass.ecommercechallenge.dto.report.TopProductSaledDTO (
                 oi.productId.id,
                 p.name,

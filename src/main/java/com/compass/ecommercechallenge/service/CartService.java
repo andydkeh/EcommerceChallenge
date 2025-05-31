@@ -78,13 +78,14 @@ public class CartService {
         if (productExists.isPresent() && productExists.get().getQuantity() >= dto.quantity()) {
             var alreadyExists = cartItemRepository.findCartItemByCartIdAndProductId(idCart, productExists.get());
             if (alreadyExists != null){
+                throw new ResponseStatusException(HttpStatus.CONFLICT);
+            }
                 var cartItem = new CartItem();
                 cartItem.setCartId(idCart);
                 cartItem.setProductId(productExists.get());
                 cartItem.setQuantity(dto.quantity());
                 cartItemRepository.save(cartItem);
-            }
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
+
         } else{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

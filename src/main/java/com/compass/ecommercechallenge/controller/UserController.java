@@ -7,6 +7,7 @@ import com.compass.ecommercechallenge.entity.User;
 import com.compass.ecommercechallenge.repository.RoleRepository;
 import com.compass.ecommercechallenge.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,7 +39,7 @@ public class UserController {
     //client+cart
     @Transactional
     @PostMapping("/createUser")
-    public ResponseEntity<Void> newUser(@RequestBody CreteUserDTO newUserDTO) {
+    public ResponseEntity<Void> newUser(@RequestBody @Valid CreteUserDTO newUserDTO) {
 
         var clientRole = roleRepository.findByName(UserRoleEnum.CLIENT.name());
         var userExists = userRepository.findByEmail(newUserDTO.email());
@@ -61,7 +62,7 @@ public class UserController {
     @Transactional
     @PostMapping("/createAdmin")
     @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")
-    public ResponseEntity<Void> newAdmin(@RequestBody CreteUserDTO newUserDTO) {
+    public ResponseEntity<Void> newAdmin(@RequestBody @Valid CreteUserDTO newUserDTO) {
 
         var clientRole = roleRepository.findByName(UserRoleEnum.ADMIN.name());
         var userExists = userRepository.findByEmail(newUserDTO.email());

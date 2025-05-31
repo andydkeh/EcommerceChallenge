@@ -42,6 +42,9 @@ public class SecurityConfig {
                         authorizeRequests
                                 .requestMatchers(HttpMethod.POST, "api/v1/login").permitAll()
                                 .requestMatchers(HttpMethod.POST, "api/v1/createUser").permitAll()
+                                .requestMatchers("/api/v1/auth/forgot-password").permitAll()
+                                .requestMatchers("/api/v1/auth/reset-password").permitAll()
+                                .requestMatchers("/api/v1/auth/validate-token").permitAll()
                                 .anyRequest().authenticated())
                 .oauth2ResourceServer(oAuth2 ->
                         oAuth2.jwt(Customizer.withDefaults()))

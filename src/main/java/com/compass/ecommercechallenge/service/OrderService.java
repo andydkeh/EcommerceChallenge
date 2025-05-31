@@ -1,14 +1,12 @@
 package com.compass.ecommercechallenge.service;
 
-import com.compass.ecommercechallenge.entity.CartItem;
-import com.compass.ecommercechallenge.entity.Order;
-import com.compass.ecommercechallenge.entity.OrderItem;
-import com.compass.ecommercechallenge.entity.User;
+import com.compass.ecommercechallenge.entity.*;
 import com.compass.ecommercechallenge.repository.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Service
@@ -52,44 +50,53 @@ public class OrderService {
 
         var order = createOrder(user);
 
-        var cartByUser = cartRepository.findCartsByIdAndIsActive(idUSer, true);
+        var cartByUser = cartRepository.findCartsByIdUserAndIsActive(user, true);
         if (cartByUser == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
         var cartItems = cartItemRepository.findByCartId(cartByUser);
-        cartItems.forEach(orderItem -> {
-            createOrderItem(order, orderItem);
-        });
 
         cartItems.forEach(cartItem -> {
             createOrderItem(order, cartItem);
         });
+
+        order.setTotalPrice(cartItemRepository.calculateCartTotal(cartByUser));
+        order.setStatus(true);
+        orderRepository.save(order);
+
+        cartByUser.setIsActive(false);
+        cartRepository.save(cartByUser);
+
+        var newCart = new Cart();
+        newCart.setIdUser(user);
+        newCart.setIsActive(true);
+        cartRepository.save(newCart);
     }
 
     public void createOrderItem(Order order, CartItem cartItem){
-        //validar se quantidade do produto é o suficiente
-        //diminuiu quantidade
-
         var product = productRepository.findById(cartItem.getProductId().getId());
 
-        if (product.get().getQuantity() > cartItem.getQuantity()){
+        if (product.get().getQuantity() < cartItem.getQuantity()){
             throw new ResponseStatusException(HttpStatus.CONFLICT);
-            //alterar para o status mais adequado
         }
 
         var newQuantity = product.get().getQuantity() - cartItem.getQuantity();
         product.get().setQuantity(newQuantity);
+        productRepository.save(product.get());
 
         if (product.get().getQuantity() == 0){
             productService.inactivateProduct(product.get().getId(), false);
         }
 
+        BigDecimal itemTotalPrice = cartItem.getProductId().getPrice()
+                .multiply(BigDecimal.valueOf(cartItem.getQuantity()));
+
         var orderItem = new OrderItem();
         orderItem.setOrderId(order);
-        orderItem.setProductId(orderItem.getProductId());
-        orderItem.setQuantity(orderItem.getQuantity());
-        orderItem.setPrice(orderItem.getPrice());
+        orderItem.setProductId(cartItem.getProductId());
+        orderItem.setQuantity(cartItem.getQuantity());
+        orderItem.setPrice(itemTotalPrice);
 
         orderItemRepository.save(orderItem);
     }
