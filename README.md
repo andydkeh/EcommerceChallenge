@@ -51,7 +51,7 @@ Um sistema completo de e-commerce desenvolvido em Spring Boot, oferecendo funcio
 ## Estrutura do Projeto
 
 ```
-src/main/java/com/compass/ecommercechallenge/
+src/main/java/com/andydkeh/ecommercechallenge/
 ├── config/          # Configurações de segurança e inicialização
 ├── controller/      # Endpoints da API REST
 ├── dto/            # Objetos de transferência de dados
